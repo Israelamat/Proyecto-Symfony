@@ -988,6 +988,7 @@ textarea.input {
   border: none;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  font-size: 22px;
 }
 
 .product .product-body .product-btns>button:hover {
@@ -1401,6 +1402,12 @@ textarea.input {
 /*----------------------------*\
 	Product view
 \*----------------------------*/
+
+#product-main-img {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 #product-main-img .slick-prev {
   -webkit-transform: translateX(-15px);

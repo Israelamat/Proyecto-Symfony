@@ -44,6 +44,22 @@
     border-color: #ef233c;
 }
 
+.game-grid-img {
+    object-fit: cover;
+}
+
+.filters-row {
+    background: #F5F5F5;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #15161D;
+    margin-bottom: 5px;
+}
 
 @media only screen and (max-width: 991px) {
     .header-auth .menu-toggle {
