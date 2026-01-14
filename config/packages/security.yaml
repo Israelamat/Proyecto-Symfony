@@ -23,6 +23,7 @@ security:
             form_login: 
                 login_path: app_login 
                 check_path: app_login
+                default_target_path: misjuegos   
                 enable_csrf: true
 
             logout: 
@@ -38,6 +39,12 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY } 
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_USER }
+
 
 when@test:
     security:

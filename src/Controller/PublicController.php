@@ -93,49 +93,11 @@ final class PublicController extends AbstractController
     }
 
 
-    #[Route('/usuarios', name: 'usuarios')]
-    public function usuarios(): Response
-    {
-        // Array de usuarios de ejemplo
-        $users = [
-            [
-                'name' => 'Erika López',
-                'email' => 'erika@example.com',
-                'type' => 'admin',
-            ],
-            [
-                'name' => 'Carlos Pérez',
-                'email' => 'carlos@example.com',
-                'type' => 'normal',
-            ],
-            [
-                'name' => 'Laura Gómez',
-                'email' => 'laura@example.com',
-                'type' => 'normal',
-            ],
-            [
-                'name' => 'Juan Martínez',
-                'email' => 'juan@example.com',
-                'type' => 'admin',
-            ],
-        ];
-
-        return $this->render('gestion-usuarios.html.twig', [
-            'users' => $users
-        ]);
-    }
-
+   
     #[Route('/nuevojuego', name: 'nuevojuego')]
     public function nuevojuego(): Response
     {
         return $this->render('crearjuego.html.twig');
-    }
-
-
-    #[Route('/perfil', name: 'perfil')]
-    public function perfil(): Response
-    {
-        return $this->render('perfil.html.twig');
     }
 
 }

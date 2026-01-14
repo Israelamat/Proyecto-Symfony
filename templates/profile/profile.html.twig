@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mi perfil | Tienda de Videojuegos
+{% endblock %}
+
+{% block body %}
+	<div class="section">
+		<div class="container">
+
+			<div class="section-title mb-4">
+				<h3 class="title">Mi perfil</h3>
+			</div>
+
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#datos" data-toggle="tab">Datos del usuario</a>
+								</li>
+								<li>
+									<a href="#password" data-toggle="tab">Cambiar contraseña</a>
+								</li>
+								<li>
+									<a href="#avatar" data-toggle="tab">Imagen de perfil</a>
+								</li>
+							</ul>
+
+							<div class="tab-content" style="margin-top:20px">
+
+								<div class="tab-pane fade in active" id="datos">
+									<div class="row">
+										<div class="col-md-4 text-center">
+											<img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="Avatar" width="150" height="150" style="border-radius:50%;">
+
+										</div>
+										<div class="col-md-8">
+											<p>
+												<strong>Nombre:</strong>
+												{{ user.name }}</p>
+											<p>
+												<strong>Email:</strong>
+												{{ user.email }}</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="tab-pane fade" id="password">
+									<form>
+										<div class="form-group">
+											<label>Contraseña actual</label>
+											<input type="password" class="input form-control" required>
+										</div>
+
+										<div class="form-group">
+											<label>Nueva contraseña</label>
+											<input type="password" class="input form-control" required>
+										</div>
+
+										<div class="form-group">
+											<label>Repetir nueva contraseña</label>
+											<input type="password" class="input form-control" required>
+										</div>
+
+										<button class="btn btn-danger">
+											<i class="fa fa-lock"></i>
+											Cambiar contraseña
+										</button>
+									</form>
+								</div>
+
+								<div class="tab-pane fade" id="avatar">
+									{{ form_start(avatarForm, {
+                                        'method': 'POST',
+                                        'action': path('profile_avatar'),
+                                        'attr': {'enctype': 'multipart/form-data'
+                                    }}) }}
+
+									<div class="mb-3 text-center">
+										<img id="avatar-preview" src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="Avatar" width="100" height="100" style="border-radius:50%;">
+									</div>
+
+									<div class="form-group">
+										{{ form_label(avatarForm.avatar) }}
+										{{ form_widget(avatarForm.avatar, {'attr': {'class': 'form-control', 'id': 'avatar-input'}}) }}
+										{{ form_errors(avatarForm.avatar) }}
+									</div>
+
+									<div class="text-center" style="margin-top:15px;">
+										<button class="btn btn-danger">
+											<i class="fa fa-upload"></i>
+											Subir imagen
+										</button>
+									</div>
+
+									{{ form_end(avatarForm) }}
+
+									<script>
+										document.getElementById('avatar-input').addEventListener('change', function (event) {
+                                            const [file] = this.files;
+                                                if (file) {
+                                                    const preview = document.getElementById('avatar-preview');
+                                                    preview.src = URL.createObjectURL(file);
+                                                }
+                                        });
+									</script>
+								</div>
+
+
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

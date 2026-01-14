@@ -46,6 +46,13 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('captcha', TextType::class, [
+                'mapped' => false,
+                'label' => 'Código de verificación',
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
         ;
     }
 

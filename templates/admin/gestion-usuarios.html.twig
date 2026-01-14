@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios | Admin
+{% endblock %}
+
+{% block body %}
+	<div class="section">
+		<div class="container">
+
+			<form method="get" class="row mb-3 align-items-center">
+				<div class="col-md-3">
+					<select name="type" class="form-select input-select">
+						<option value="">Todos los tipos</option>
+						<option value="normal" {{ typeFilter == 'normal' ? 'selected' }}>Normal</option>
+						<option value="admin" {{ typeFilter == 'admin' ? 'selected' }}>Administrador</option>
+					</select>
+				</div>
+
+				<div class="col-md-6">
+					<div class="search-users d-flex">
+						<input type="text" id="name" name="name" class="form-control input" placeholder="Buscar por nombre" value="{{ nameSearch }}">
+						<button type="submit" id="search-button" class="btn btn-primary">Filtrar</button>
+					</div>
+				</div>
+			</form>
+
+			<br>
+
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}">{{ message }}</div>
+				{% endfor %}
+			{% endfor %}
+
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-bordered align-middle text-center" id="users-table">
+					<thead class="table-dark">
+						<tr>
+							<th class="text-center">Nombre</th>
+							<th class="text-center">Email</th>
+							<th class="text-center">Tipo</th>
+							<th class="text-center">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+							<tr>
+								<td>{{ user.name }}</td>
+								<td>{{ user.email }}</td>
+								<td>
+									<span class="badge {{ 'ROLE_ADMIN' in user.roles ? 'badge-danger' : 'badge-default' }}">
+										{{ 'ROLE_ADMIN' in user.roles ? 'Admin' : 'Normal' }}
+									</span>
+								</td>
+								<td>
+									<form method="post" action="{{ path('admin_users_change_type', {id: user.id}) }}" style="display:inline;">
+										<button type="submit" class="btn btn-sm btn-info  me-1" onclick="return confirm('¿Deseas cambiar el tipo de usuario de {{ user.name }} ?');">
+											Cambiar tipo
+										</button>
+									</form>
+
+									<form method="post" action="{{ path('admin_users_delete', {id: user.id}) }}" style="display:inline;">
+										<button type="submit" class="btn btn-sm btn-danger" 
+                                            onclick="return confirm('¿Deseas eliminar a {{ user.name }}?');">
+											Eliminar
+										</button>
+									</form>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="4" class="text-center">No hay usuarios</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

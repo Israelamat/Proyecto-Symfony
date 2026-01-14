@@ -70,6 +70,46 @@
     margin-bottom: 5px;
 }
 
+.btn-danger {
+    background-color: #D10024;
+    border-color: #D10024;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #ef233c;
+    border-color: #ef233c;
+}
+
+.btn-outline-danger {
+    color: #D10024;
+    border-color: #D10024;
+}
+
+.btn-outline-danger:hover {
+    background-color: #D10024;
+    color: #fff;
+}
+
+#users-table th,
+#users-table td {
+    vertical-align: middle;
+}
+
+#users-table tbody tr:hover {
+    background-color: rgba(209, 0, 36, 0.1);
+}
+
+.badge-danger {
+    background-color: #D10024 !important;
+    color: #fff;
+}
+
+.badge-default {
+    background-color: #6c757d !important;
+    color: #fff;
+}
+
 @media only screen and (max-width: 991px) {
     .header-auth .menu-toggle {
         display: inline-block;

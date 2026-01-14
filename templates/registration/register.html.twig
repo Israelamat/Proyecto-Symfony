@@ -47,6 +47,18 @@
                             {{ form_errors(registrationForm.plainPassword.second) }}
                         </div>
 
+                        <div class="form-group">
+                            <label>Código de verificación</label>
+                            <div style="display:flex; align-items:center; gap:15px;">
+                                <img src="{{ path('captcha') }}" alt="captcha" style="border:1px solid #ccc;">
+                                {{ form_widget(registrationForm.captcha, {
+                                    attr: { class: 'input form-control', style: 'width:150px;' }
+                                }) }}
+                            </div>
+                            {{ form_errors(registrationForm.captcha) }}
+                        </div>
+
+
                         <div class="text-center">
                             <button type="submit" class="auth-btn">
                                 Registrarse
