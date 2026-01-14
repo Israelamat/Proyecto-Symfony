@@ -14,17 +14,26 @@
 }
 
 .auth-btn {
-    position: relative;
-    border: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     height: 40px;
     padding: 0 25px;
+
+    border: 2px solid transparent;
     background-color: #ef233c;
     color: #FFF;
     text-transform: uppercase;
     font-weight: 600;
     border-radius: 40px;
-    -webkit-transition: 0.2s all;
+
     transition: 0.2s all;
+    text-decoration: none;
+}
+
+.auth-btn i {
+    margin-right: 6px;
 }
 
 .search-users {

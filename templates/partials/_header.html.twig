@@ -1,7 +1,8 @@
 <header>
 	<div id="header">
 		<div class="container">
-			<div class="row">
+			<div
+				class="row">
 				<!-- LOGO -->
 				<div class="col-md-3">
 					<div class="header-logo">
@@ -30,12 +31,21 @@
 
 				<div class="col-md-4 clearfix">
 					<div class="header-auth">
-						<div>
-							<button class="auth-btn">Iniciar sesión</button>
-						</div>
-						<div>
-							<button class="auth-btn">Registrarse</button>
-						</div>
+						{% if is_granted('IS_AUTHENTICATED') %}
+							<a class="auth-btn" href={{ path('app_logout') }}>
+								<i class="fa fa-sign-out sr-icons"></i>
+								Salir - {{ app.user.name }}
+							</a>
+						{% else %}
+							<a class="auth-btn" href={{ path('app_login') }}>
+								Iniciar sesión
+							</a>
+							<a class="auth-btn" href={{ path('app_register') }}>
+								Registrarse
+							</a>
+
+						{% endif %}
+
 						<!-- Menu Toogle -->
 						<div class="menu-toggle">
 							<a href="#">

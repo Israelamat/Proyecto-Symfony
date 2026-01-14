@@ -5,21 +5,26 @@
 				<li class="active">
 					<a href="#">Home</a>
 				</li>
-				<li>
-					<a href="#">Mis juegos</a>
-				</li>
-				<li>
-					<a href="#">Mis compras</a>
-				</li>
-				<li>
-					<a href="#">Añadir juego</a>
-				</li>
-				<li>
-					<a href="#">Perfil</a>
-				</li>
-				<li>
-					<a href="#">Gestión de usuarios</a>
-				</li>
+
+				{% if is_granted('IS_AUTHENTICATED') %}
+					<li>
+						<a href="#">Mis juegos</a>
+					</li>
+					<li>
+						<a href="#">Mis compras</a>
+					</li>
+					<li>
+						<a href="#">Añadir juego</a>
+					</li>
+					<li>
+						<a href="#">Perfil</a>
+					</li>
+					{% if is_granted('ROLE_ADMIN') %}
+					<li>
+						<a href="#">Gestión de usuarios</a>
+					</li>
+					{% endif %}
+				{% endif %}
 			</ul>
 		</div>
 	</div>

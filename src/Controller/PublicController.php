@@ -21,16 +21,16 @@ final class PublicController extends AbstractController
         return $this->render('test.html.twig');
     }
 
-    #[Route('/login', name: 'login')]
+    #[Route('/logintest', name: 'testlogin')]
     public function login(): Response
     {
-        return $this->render('login.html.twig');
+        return $this->render('oldlogin.html.twig');
     }
 
-    #[Route('/register', name: 'register')]
+    #[Route('/registertest', name: 'testregister')]
     public function register(): Response
     {
-        return $this->render('register.html.twig');
+        return $this->render('oldregister.html.twig');
     }
 
     #[Route('/detalles', name: 'detalles')]
