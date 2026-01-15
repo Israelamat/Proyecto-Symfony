@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class GameController extends AbstractController
 {
@@ -55,7 +56,7 @@ class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/misjuegos', name: 'user_games')]
+    #[Route('/juegos/propios', name: 'user_games')]
     public function myGames(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
@@ -66,11 +67,71 @@ class GameController extends AbstractController
 
         $games = $em->getRepository(Game::class)->findBy(
             ['user' => $user],
-            ['createdAt' => 'DESC'] 
+            ['createdAt' => 'DESC']
         );
 
         return $this->render('games/misjuegos.html.twig', [
             'games' => $games,
         ]);
     }
+
+    #[Route('/juegos/{id}', name: 'game_show')]
+    public function show(Game $game): Response
+    {
+        $user = $this->getUser();
+
+        $isOwner = $user && $game->getUser() === $user;
+
+        return $this->render('games/detalles.html.twig', [
+            'game' => $game,
+            'isOwner' => $isOwner,
+        ]);
+    }
+
+    // TODO: editar juego
+
+    #[Route('/mis-juegos/eliminar/{id}', name: 'game_delete', methods: ['GET', 'POST'])]
+    public function delete(Game $game, EntityManagerInterface $em): RedirectResponse
+    {
+        $user = $this->getUser();
+
+        if ($game->getUser() !== $user) {
+            $this->addFlash('error', 'No puedes eliminar un juego que no te pertenece.');
+            return $this->redirectToRoute('user_games');
+        }
+        
+        // TODO: eliminar juego solo si no tiene compra asociada
+        /*
+        if ($game->getOrders() && count($game->getOrders()) > 0) {
+            $this->addFlash('error', 'No puedes eliminar este juego porque ya ha sido comprado.');
+            return $this->redirectToRoute('user_games');
+        }
+        */ 
+        $em->remove($game);
+        $em->flush();
+
+        $this->addFlash('success', "El juego '{$game->getTitle()}' ha sido eliminado correctamente.");
+        return $this->redirectToRoute('user_games');
+    }
+
+
+    #[Route('/compras', name: 'user_purchases')]
+    public function showPurchases(): Response
+    {
+        // TODO: implementar listado de compras del usuario
+        $games = [
+            [
+                'title' => 'The Witcher 3',
+                'date' => '2023-08-05',
+                'price' => '30.00',
+                'genres' => ['RPG', 'Aventura']
+            ],
+        ];
+
+        return $this->render('games/miscompras.html.twig', [
+            'games' => $games
+        ]);
+    }
+
+    // TODO: pagina de compra de un juego (simulado) mandar mail al propietario del juego
 }
