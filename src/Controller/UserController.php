@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends AbstractController
 {
@@ -44,25 +45,24 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $avatarFile */
             $avatarFile = $form->get('avatar')->getData();
-
+            
             if ($avatarFile) {
-                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
+                
+                $filename = md5(uniqid()) . '.' . $avatarFile->guessExtension();
 
                 // Carpeta donde se guardan los avatares
-                $uploadDir = $this->getParameter('avatars_directory'); // lo definimos en config/services.yaml
+                $uploadDir = $this->getParameter('avatars_directory'); 
 
                 try {
-                    $avatarFile->move($uploadDir, $newFilename);
+                    $avatarFile->move($uploadDir, $filename);
 
                     // Redimensionar a 100x100 usando Imagine
                     $imagine = new Imagine();
-                    $image = $imagine->open($uploadDir . '/' . $newFilename);
-                    $image->resize(new Box(100, 100))->save($uploadDir . '/' . $newFilename);
+                    $image = $imagine->open($uploadDir . '/' . $filename);
+                    $image->resize(new Box(100, 100))->save($uploadDir . '/' . $filename);
 
                     // Actualizar la entidad
-                    $user->setAvatar($newFilename);
+                    $user->setAvatar($filename);
                     $em->persist($user);
                     $em->flush();
 
@@ -71,11 +71,12 @@ class UserController extends AbstractController
                     $this->addFlash('error', 'Error subiendo la imagen.');
                 }
             }
-        }
+        } 
 
         return $this->render('profile/profile.html.twig', [
             'avatarForm' => $form->createView(),
             'user' => $user,
+            'tab' => 'avatar',
         ]);
     }
 }
