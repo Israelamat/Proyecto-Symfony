@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Añadir juego{% endblock %}
+
+{% block body %}
+<div class="section">
+    <div class="container">
+
+        <h3 class="title">Añadir videojuego</h3>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ form_start(form, {
+            'attr': {'enctype': 'multipart/form-data'}
+        }) }}
+
+        <div class="form-group">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control input'}}) }}
+            {{ form_errors(form.title) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control input'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.price) }}
+            {{ form_widget(form.price) }}
+            {{ form_errors(form.price) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.year) }}
+            {{ form_widget(form.year, {'attr': {'class': 'form-control input'}}) }}
+            {{ form_errors(form.year) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.genres) }}
+            {{ form_widget(form.genres, {'attr': {'class': 'form-control input'}}) }}
+            {{ form_errors(form.genres) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-control input'}}) }}
+            {{ form_errors(form.image) }}
+        </div>
+
+        <button class="btn btn-danger btn-block" style="height: 40px;font-size: 14px;font-weight: bold;" type="submit">
+            <i class="fa fa-plus" style="margin-right: 5px;"></i> Añadir juego
+        </button>
+
+        {{ form_end(form) }}
+
+    </div>
+</div>
+{% endblock %}

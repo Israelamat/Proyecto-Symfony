@@ -36,45 +36,81 @@
 							<div class="tab-content" style="margin-top:20px">
 
 								<div class="tab-pane fade {{ activeTab == 'datos' ? 'in active' }}" id="datos">
-									<div class="row">
-										<div class="col-md-4 text-center">
-											<img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="Avatar" width="150" height="150" style="border-radius:50%;">
 
+									<div class="row user-profile-box">
+
+										<div class="col-md-4 text-center">
+											<div class="avatar-wrapper">
+												<img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="Avatar" class="img-circle user-avatar">
+											</div>
 										</div>
+
 										<div class="col-md-8">
-											<p>
-												<strong>Nombre:</strong>
-												{{ user.name }}</p>
-											<p>
-												<strong>Email:</strong>
-												{{ user.email }}</p>
+											<h2 class="user-name">{{ user.name }}</h2>
+
+											<p class="user-email">
+												<i class="fa fa-envelope"></i>
+												{{ user.email }}
+											</p>
+
+											{% if user.roles is defined and 'ROLE_ADMIN' in user.roles %}
+												<p class="user-meta">
+													<i class="fa fa-shield"></i>
+													Administrador
+												</p>
+											{% endif %}
+
+											<hr>
+
+											<p class="user-meta">
+												<i class="fa fa-user"></i>
+												Usuario registrado
+											</p>
 										</div>
+
 									</div>
+
 								</div>
+
 
 								<div class="tab-pane fade {{ activeTab == 'password' ? 'in active' }}" id="password">
 
-									<form>
-										<div class="form-group">
-											<label>Contraseña actual</label>
-											<input type="password" class="input form-control" required>
-										</div>
+									{% for label, messages in app.flashes %}
+										{% for message in messages %}
+											<div class="alert alert-{{ label }}">{{ message }}</div>
+										{% endfor %}
+									{% endfor %}
 
-										<div class="form-group">
-											<label>Nueva contraseña</label>
-											<input type="password" class="input form-control" required>
-										</div>
+									{{ form_start(passwordForm, {
+        'method': 'POST',
+        'action': path('profile_password')
+    }) }}
 
-										<div class="form-group">
-											<label>Repetir nueva contraseña</label>
-											<input type="password" class="input form-control" required>
-										</div>
+									<div class="form-group">
+										{{ form_label(passwordForm.currentPassword) }}
+										{{ form_widget(passwordForm.currentPassword, {'attr': {'class': 'input form-control'}}) }}
+										{{ form_errors(passwordForm.currentPassword) }}
+									</div>
 
-										<button class="btn btn-danger">
-											<i class="fa fa-lock"></i>
-											Cambiar contraseña
-										</button>
-									</form>
+									<div class="form-group">
+										{{ form_label(passwordForm.newPassword) }}
+										{{ form_widget(passwordForm.newPassword, {'attr': {'class': 'input form-control'}}) }}
+										{{ form_errors(passwordForm.newPassword) }}
+									</div>
+
+									<div class="form-group">
+										{{ form_label(passwordForm.repeatPassword) }}
+										{{ form_widget(passwordForm.repeatPassword, {'attr': {'class': 'input form-control'}}) }}
+										{{ form_errors(passwordForm.repeatPassword) }}
+									</div>
+
+									<button class="btn btn-danger">
+										<i class="fa fa-lock"></i>
+										Cambiar contraseña
+									</button>
+
+									{{ form_end(passwordForm) }}
+
 								</div>
 
 								<div class="tab-pane fade {{ activeTab == 'avatar' ? 'in active' }}" id="avatar">

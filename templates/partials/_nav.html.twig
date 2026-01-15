@@ -1,31 +1,39 @@
 <nav id="navigation">
-	<div class="container">
-		<div id="responsive-nav">
-			<ul class="main-nav nav navbar-nav">
-				<li class="active">
-					<a href="{{ path('home') }}">Home</a>
-				</li>
+    <div class="container">
+        <div id="responsive-nav">
+            <ul class="main-nav nav navbar-nav">
 
-				{% if is_granted('IS_AUTHENTICATED') %}
-					<li>
-						<a href="#">Mis juegos</a>
-					</li>
-					<li>
-						<a href="#">Mis compras</a>
-					</li>
-					<li>
-						<a href="#">Añadir juego</a>
-					</li>
-					<li>
-						<a href="{{ path('user_profile') }}">Perfil</a>
-					</li>
-					{% if is_granted('ROLE_ADMIN') %}
-					<li>
-						<a href="{{ path('admin_users') }}">Gestión de usuarios</a>
-					</li>
-					{% endif %}
-				{% endif %}
-			</ul>
-		</div>
-	</div>
+                <li class="{{ app.request.attributes.get('_route') == 'home' ? 'active' : '' }}">
+                    <a href="{{ path('home') }}">Home</a>
+                </li>
+
+                {% if is_granted('IS_AUTHENTICATED') %}
+
+                    <li class="{{ app.request.attributes.get('_route') == 'user_games' ? 'active' : '' }}">
+                        <a href="{{ path('user_games') }}">Mis juegos</a>
+                    </li>
+
+                    <li class="{{ app.request.attributes.get('_route') == 'user_purchases' ? 'active' : '' }}">
+                        <a href="#">Mis compras</a>
+                    </li>
+
+                    <li class="{{ app.request.attributes.get('_route') == 'game_new' ? 'active' : '' }}">
+                        <a href="{{ path('game_new') }}">Añadir juego</a>
+                    </li>
+
+                    <li class="{{ app.request.attributes.get('_route') == 'user_profile' ? 'active' : '' }}">
+                        <a href="{{ path('user_profile') }}">Perfil</a>
+                    </li>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="{{ app.request.attributes.get('_route') starts with 'admin_' ? 'active' : '' }}">
+                            <a href="{{ path('admin_users') }}">Gestión de usuarios</a>
+                        </li>
+                    {% endif %}
+
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
 </nav>

@@ -39,6 +39,7 @@ final class PublicController extends AbstractController
         return $this->render('detalles.html.twig');
     }
 
+    /*
     #[Route('/misjuegos', name: 'misjuegos')]
     public function misjuegos(): Response
     {
@@ -69,11 +70,11 @@ final class PublicController extends AbstractController
             ],
         ];
 
-        return $this->render('misjuegos.html.twig', [
+        return $this->render('games/misjuegos.html.twig', [
             'games' => $games
         ]);
     }
-
+    */
 
     #[Route('/miscompras', name: 'miscompras')]
     public function miscompras(): Response
@@ -92,12 +93,5 @@ final class PublicController extends AbstractController
         ]);
     }
 
-
-   
-    #[Route('/nuevojuego', name: 'nuevojuego')]
-    public function nuevojuego(): Response
-    {
-        return $this->render('crearjuego.html.twig');
-    }
 
 }

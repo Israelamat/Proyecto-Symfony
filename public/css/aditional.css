@@ -110,6 +110,53 @@
     color: #fff;
 }
 
+.user-profile-box {
+    background: #f9f9f9;
+    border-radius: 6px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.avatar-wrapper {
+    margin-bottom: 15px;
+}
+
+.user-avatar {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border: 4px solid #D10024;
+    padding: 4px;
+    background: #fff;
+}
+
+.user-name {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.user-email {
+    font-size: 18px;
+    color: #555;
+}
+
+.user-email i {
+    color: #D10024;
+    margin-right: 6px;
+}
+
+.user-meta {
+    font-size: 15px;
+    color: #777;
+}
+
+.user-meta i {
+    margin-right: 6px;
+}
+
+
 @media only screen and (max-width: 991px) {
     .header-auth .menu-toggle {
         display: inline-block;
