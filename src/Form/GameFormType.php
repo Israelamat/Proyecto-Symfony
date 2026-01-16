@@ -72,7 +72,7 @@ class GameFormType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Géneros',
                 'multiple' => true,
-                'expanded' => false, // select multiple
+                'expanded' => true, 
             ]);
     }
 
