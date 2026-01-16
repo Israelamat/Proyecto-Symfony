@@ -88,9 +88,51 @@ class GameController extends AbstractController
         ]);
     }
 
-    // TODO: editar juego
+    #[Route('/juegos/{id}/editar', name: 'game_edit')]
+    public function edit(
+        Game $game,
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
+        if ($game->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
 
-    #[Route('/mis-juegos/eliminar/{id}', name: 'game_delete', methods: ['GET', 'POST'])]
+        $form = $this->createForm(GameFormType::class, $game, [
+            'image_required' => false, 
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $filename = uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('games_directory'),
+                    $filename
+                );
+
+                $game->setImage($filename);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', 'Juego actualizado correctamente');
+
+            return $this->redirectToRoute('user_games');
+        }
+
+        return $this->render('games/editarjuego.html.twig', [
+            'form' => $form->createView(),
+            'game' => $game,
+        ]);
+    }
+
+
+    #[Route('/juegos/eliminar/{id}', name: 'game_delete', methods: ['GET', 'POST'])]
     public function delete(Game $game, EntityManagerInterface $em): RedirectResponse
     {
         $user = $this->getUser();
@@ -99,14 +141,14 @@ class GameController extends AbstractController
             $this->addFlash('error', 'No puedes eliminar un juego que no te pertenece.');
             return $this->redirectToRoute('user_games');
         }
-        
+
         // TODO: eliminar juego solo si no tiene compra asociada
         /*
         if ($game->getOrders() && count($game->getOrders()) > 0) {
             $this->addFlash('error', 'No puedes eliminar este juego porque ya ha sido comprado.');
             return $this->redirectToRoute('user_games');
         }
-        */ 
+        */
         $em->remove($game);
         $em->flush();
 

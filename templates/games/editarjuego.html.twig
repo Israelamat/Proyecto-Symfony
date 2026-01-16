@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar juego
+{% endblock %}
+
+{% block body %}
+	<div class="section">
+		<div class="container">
+
+			<h3 class="title">Editar videojuego</h3>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+
+					{% for label, messages in app.flashes %}
+						{% for message in messages %}
+							<div class="alert alert-{{ label }}">{{ message }}</div>
+						{% endfor %}
+					{% endfor %}
+
+					{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+					<div class="form-group">
+						{{ form_label(form.title) }}
+						{{ form_widget(form.title, {'attr': {'class': 'form-control input'}}) }}
+						{{ form_errors(form.title) }}
+					</div>
+
+					<div class="form-group">
+						{{ form_label(form.description) }}
+						{{ form_widget(form.description, {'attr': {'class': 'form-control input'}}) }}
+						{{ form_errors(form.description) }}
+					</div>
+
+					<div class="form-group">
+						{{ form_label(form.price) }}
+						{{ form_widget(form.price) }}
+						{{ form_errors(form.price) }}
+					</div>
+
+					<div class="form-group">
+						{{ form_label(form.year) }}
+						{{ form_widget(form.year, {'attr': {'class': 'form-control input'}}) }}
+						{{ form_errors(form.year) }}
+					</div>
+					<div class="form-group">
+						<label>Géneros</label>
+						<div class="row">
+							{% for genre in form.genres %}
+								<div class="col-md-4">
+									<label class="checkbox">
+										{{ form_widget(genre) }}
+										{{ genre.vars.label }}
+									</label>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label>Imagen del juego</label>
+
+						<div class="row" style="display:flex; align-items:center;">
+
+							<div class="col-md-6 text-center">
+								<img id="game-image-preview" src="{{ asset('uploads/games/' ~ game.image) }}" alt="Imagen del juego" style="max-width: 100%;height: 220px;object-fit: cover;border-radius: 6px;border: 1px solid #ddd;">
+							</div>
+
+							<div class="col-md-6">
+								{{ form_widget(form.image, {
+                                    attr: {
+                                        class: 'form-control input',
+                                        style: 'margin-top: 10px;'
+                                    }
+                                }) }}
+								{{ form_errors(form.image) }}
+
+								<small class="text-muted">
+									JPG o PNG · Máx 2MB
+								</small>
+							</div>
+
+						</div>
+					</div>
+
+
+					<button class="btn btn-warning btn-block">
+						<i class="fa fa-save"></i>
+						Guardar cambios
+					</button>
+
+					{{ form_end(form) }}
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('{{ form.image.vars.id }}');
+            const preview = document.getElementById('game-image-preview');
+
+            if (! input) return;
+
+            input.addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = e => preview.src = e.target.result;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+	</script>
+
+{% endblock %}

@@ -156,6 +156,14 @@
     margin-right: 6px;
 }
 
+.game-description {
+    max-width: 200px;         
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal;     
+    word-wrap: break-word;    
+}
 
 @media only screen and (max-width: 991px) {
     .header-auth .menu-toggle {

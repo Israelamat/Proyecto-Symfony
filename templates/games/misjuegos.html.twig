@@ -33,8 +33,14 @@
 					<thead class="table-dark">
 						<tr>
 							<th class="text-center">Título</th>
-							<th class="text-center">Fecha</th>
+							<th class="text-center">Fecha de
+								<br>
+								Registro</th>
 							<th class="text-center">Precio</th>
+							<th class="text-center">Año de
+								<br>
+								lanzamiento</th>
+							<th class="text-center">Descripción</th>
 							<th class="text-center">Géneros</th>
 							<th class="text-center">Acciones</th>
 						</tr>
@@ -45,6 +51,10 @@
 								<td>{{ game.title }}</td>
 								<td>{{ game.createdAt|date('d/m/Y') }}</td>
 								<td>€{{ game.price|number_format(2, ',', '.') }}</td>
+								<td>{{ game.year }}</td>
+								<td class="game-description">
+									{{ game.description }}
+								</td>
 								<td>
 									{% for genre in game.genres %}
 										<span class="badge bg-secondary me-1">{{ genre.name }}</span>
@@ -55,10 +65,11 @@
 										<i class="fa fa-eye"></i>
 										Ver
 									</a>
-									<button class="btn btn-sm btn-warning me-1">
+									<a href="{{ path('game_edit', {id: game.id}) }}" class="btn btn-sm btn-warning me-1">
 										<i class="fa fa-edit"></i>
 										Editar
-									</button>
+									</a>
+
 									<a href="{{ path('game_delete', {id: game.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el juego {{ game.title }}? Esta acción no se puede deshacer.');">
 										<i class="fa fa-trash"></i>
 										Eliminar

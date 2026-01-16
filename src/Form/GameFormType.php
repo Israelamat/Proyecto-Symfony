@@ -55,8 +55,8 @@ class GameFormType extends AbstractType
             ->add('image', FileType::class, [
                 'label' => 'Imagen del juego',
                 'mapped' => false,
-                'required' => true,
-                'constraints' => [
+                'required' => $options['image_required'],
+                'constraints' => $options['image_required'] ? [
                     new File([
                         'maxSize' => '2M',
                         'mimeTypes' => [
@@ -65,7 +65,7 @@ class GameFormType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Solo se permiten imágenes JPG o PNG',
                     ])
-                ],
+                ] : [],
             ])
             ->add('genres', EntityType::class, [
                 'class' => Genre::class,
@@ -80,6 +80,7 @@ class GameFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Game::class,
+            'image_required' => true, 
         ]);
     }
 }
