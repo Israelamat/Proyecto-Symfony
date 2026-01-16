@@ -11,7 +11,7 @@
 				<div class="col-md-3">
 					<select name="type" class="form-select input-select">
 						<option value="">Todos los tipos</option>
-						<option value="normal" {{ typeFilter == 'normal' ? 'selected' }}>Normal</option>
+						<option value="user" {{ typeFilter == 'user' ? 'selected' }}>Normal</option>
 						<option value="admin" {{ typeFilter == 'admin' ? 'selected' }}>Administrador</option>
 					</select>
 				</div>
@@ -37,6 +37,7 @@
 				<table class="table table-striped table-hover table-bordered align-middle text-center" id="users-table">
 					<thead class="table-dark">
 						<tr>
+							<th class="text-center">Avatar</th>
 							<th class="text-center">Nombre</th>
 							<th class="text-center">Email</th>
 							<th class="text-center">Tipo</th>
@@ -46,6 +47,10 @@
 					<tbody>
 						{% for user in users %}
 							<tr>
+								<td>
+									<img src="{{ asset('uploads/avatars/' ~ user.avatar) }}" alt="Avatar de {{ user.name }}" 
+										width="50" height="50" style="object-fit: cover; border-radius: 50%;">
+								</td>
 								<td>{{ user.name }}</td>
 								<td>{{ user.email }}</td>
 								<td>

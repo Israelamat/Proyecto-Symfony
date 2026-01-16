@@ -29,8 +29,19 @@ class AdminController extends AbstractController
         $users = $qb->getQuery()->getResult();
 
         if ($typeFilter) {
-            $roleToCheck = $typeFilter === 'admin' ? 'ROLE_ADMIN' : 'ROLE_USER';
-            $users = array_filter($users, fn($user) => in_array($roleToCheck, $user->getRoles()));
+            $users = array_filter($users, function ($user) use ($typeFilter) {
+                $roles = $user->getRoles();
+
+                if ($typeFilter === 'admin') {
+                    return in_array('ROLE_ADMIN', $roles);
+                }
+
+                if ($typeFilter === 'user') {
+                    return in_array('ROLE_USER', $roles) && !in_array('ROLE_ADMIN', $roles);
+                }
+
+                return true;
+            });
         }
 
         return $this->render('admin/gestion-usuarios.html.twig', [
