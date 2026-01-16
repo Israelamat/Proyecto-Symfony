@@ -44,9 +44,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $games;
 
+    #[ORM\OneToMany(mappedBy: 'buyer', targetEntity: Purchase::class)]
+    private Collection $purchases;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->purchases = new ArrayCollection();   
     }
 
     public function getId(): ?int
@@ -173,6 +177,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->games->removeElement($game)) {
             if ($game->getUser() === $this) {
                 $game->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(Purchase $purchase): static
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases->add($purchase);
+            $purchase->setBuyer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Purchase $purchase): static
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            if ($purchase->getBuyer() === $this) {
+                $purchase->setBuyer(null);
             }
         }
 

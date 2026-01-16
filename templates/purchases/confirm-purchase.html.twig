@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmar compra
+{% endblock %}
+
+{% block body %}
+	<div class="section">
+		<div class="container">
+
+			<h3 class="title">Confirmar compra</h3>
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+
+					<h4>{{ game.title }}</h4>
+					<p>{{ game.description }}</p>
+
+					<h3 class="product-price">
+						€{{ game.price|number_format(2, ',', '.') }}
+					</h3>
+
+					<form method="post" action="{{ path('game_buy_confirm', {id: game.id}) }}">
+						<button type="submit" class="btn btn-danger btn-lg">
+							<i class="fa fa-shopping-cart"></i>
+							Confirmar compra
+						</button>
+
+						<a href="{{ path('game_show', {id: game.id}) }}" class="btn btn-default">
+							Cancelar
+						</a>
+					</form>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis juegos comprados | Tienda de Videojuegos
+{% endblock %}
+
+{% block body %}
+	<div class="section">
+		<div class="container">
+
+			<div class="section-title mb-4">
+				<h3 class="title">Mis juegos comprados</h3>
+			</div>
+
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}">{{ message }}</div>
+				{% endfor %}
+			{% endfor %}
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-bordered align-middle text-center">
+					<thead class="table-dark">
+						<tr>
+							<th class="text-center">Juego</th>
+							<th class="text-center">Precio</th>
+							<th class="text-center">Fecha de compra</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for p in purchases %}
+							<tr>
+								<td> <a href={{ path('game_show', {id: p.game.id}) }}> {{ p.game.title }} </a></td>
+								<td>€{{ p.price|number_format(2, ',', '.') }}</td>
+								<td>{{ p.purchasedAt|date('d/m/Y') }}</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="3">No has comprado juegos todavía</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

@@ -41,6 +41,9 @@ class Game
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
     private ?string $price = null;
 
+    #[ORM\OneToOne(mappedBy: 'game', targetEntity: Purchase::class)]
+    private ?Purchase $purchase = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -153,6 +156,26 @@ class Game
     public function setPrice(string $price): self
     {
         $this->price = $price;
+        return $this;
+    }
+
+    public function getPurchase(): ?Purchase
+    {
+        return $this->purchase;
+    }
+
+    public function setPurchase(?Purchase $purchase): self
+    {
+        if ($purchase === null && $this->purchase !== null) {
+            $this->purchase->setGame(null);
+        }
+
+        if ($purchase !== null && $purchase->getGame() !== $this) {
+            $purchase->setGame($this);
+        }
+
+        $this->purchase = $purchase;
+
         return $this;
     }
 }

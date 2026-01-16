@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\Purchase;
 use App\Form\GameFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -158,22 +159,16 @@ class GameController extends AbstractController
 
 
     #[Route('/compras', name: 'user_purchases')]
-    public function showPurchases(): Response
+    public function showPurchases(EntityManagerInterface $em): Response
     {
-        // TODO: implementar listado de compras del usuario
-        $games = [
-            [
-                'title' => 'The Witcher 3',
-                'date' => '2023-08-05',
-                'price' => '30.00',
-                'genres' => ['RPG', 'Aventura']
-            ],
-        ];
+        $user = $this->getUser();
 
-        return $this->render('games/miscompras.html.twig', [
-            'games' => $games
+        $purchases = $em->getRepository(Purchase::class)
+            ->findBy(['buyer' => $user], ['purchasedAt' => 'DESC']);
+
+        return $this->render('purchases/miscompras.html.twig', [
+            'purchases' => $purchases
         ]);
-    }
 
-    // TODO: pagina de compra de un juego (simulado) mandar mail al propietario del juego
+    }
 }

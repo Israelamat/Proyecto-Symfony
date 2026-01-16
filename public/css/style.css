@@ -1560,11 +1560,16 @@ textarea.input {
   border-radius: 40px;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none; 
+  cursor: pointer;
 }
 
 .product-details .add-to-cart .add-to-cart-btn>i {
   position: absolute;
-  left: 0;
+  left: 12px;
   top: 0;
   width: 40px;
   height: 40px;

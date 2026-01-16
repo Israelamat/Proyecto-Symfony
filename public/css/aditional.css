@@ -165,6 +165,19 @@
     word-wrap: break-word;    
 }
 
+.badge-comprado {
+    display: inline-block;
+    background-color: #D10024; 
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.6rem;
+    padding: 12px 15px;
+    border-radius: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 991px) {
     .header-auth .menu-toggle {
         display: inline-block;
