@@ -33,6 +33,14 @@
 
                 {% endif %}
 
+                <li class="{{ app.request.attributes.get('_route') == 'about_us' ? 'active' : '' }}">
+                    <a href="{{ path('about_us') }}">Sobre Nosotros</a>
+                </li>   
+
+                <li class="{{ app.request.attributes.get('_route') == 'contact_us' ? 'active' : '' }}">
+                    <a href="{{ path('contact_us') }}">Contáctanos</a>
+                </li>
+
             </ul>
         </div>
     </div>

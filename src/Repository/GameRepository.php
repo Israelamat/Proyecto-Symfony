@@ -36,7 +36,8 @@ class GameRepository extends ServiceEntityRepository
         ?int $genreId = null,
         ?\DateTimeInterface $dateFrom = null,
         ?\DateTimeInterface $dateTo = null,
-        ?string $search = null
+        ?string $search = null,
+        ?int $userId = null
     ): array {
         $qb = $this->createQueryBuilder('g')
             ->leftJoin(Purchase::class, 'p', 'WITH', 'p.game = g')
@@ -66,6 +67,12 @@ class GameRepository extends ServiceEntityRepository
         if ($search) {
             $qb->andWhere('LOWER(g.title) LIKE :search OR LOWER(g.description) LIKE :search')
                 ->setParameter('search', '%' . strtolower($search) . '%');
+        }
+
+        // Filtrar por usuario (suponiendo que hay una relación con User)
+        if ($userId) {
+            $qb->andWhere('g.user = :userId')
+                ->setParameter('userId', $userId);
         }
 
         return $qb->getQuery()->getResult();

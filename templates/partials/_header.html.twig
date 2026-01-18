@@ -1,9 +1,8 @@
 <header>
 	<div id="header">
 		<div class="container">
-			<div
-				class="row">
-				<!-- LOGO -->
+			<div class="row">
+
 				<div class="col-md-3">
 					<div class="header-logo">
 						<a href="{{ path('home') }}" class="logo-text">
@@ -12,23 +11,16 @@
 					</div>
 				</div>
 
-				<!-- /LOGO -->
-
-				<!-- SEARCH BAR -->
 				<div class="col-md-5">
 					<div class="header-search">
-						<form>
-							<select class="input-select">
-								<option value="0">Genero</option>
-								<option value="1">Category 01</option>
-								<option value="1">Category 02</option>
-							</select>
-							<input class="input" placeholder="Buscar juego">
-							<button class="search-btn">Buscar</button>
+						<form method="get" action="{{ path('home') }}">
+							<input class="input" name="q" placeholder="Buscar juego">
+							<button type="submit" class="search-btn">
+								<i class="fa fa-search"></i>
+							</button>
 						</form>
 					</div>
-				</div>
-				<!-- /SEARCH BAR -->
+				</div>	
 
 				<div class="col-md-4 clearfix">
 					<div class="header-auth">
@@ -48,14 +40,12 @@
 
 						{% endif %}
 
-						<!-- Menu Toogle -->
 						<div class="menu-toggle">
 							<a href="#">
 								<i class="fa fa-bars"></i>
 								<span>Menu</span>
 							</a>
 						</div>
-						<!-- /Menu Toogle -->
 					</div>
 				</div>
 

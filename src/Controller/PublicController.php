@@ -19,8 +19,9 @@ final class PublicController extends AbstractController
         $dateFrom = $request->query->get('date_from') ? new \DateTime($request->query->get('date_from')) : null;
         $dateTo = $request->query->get('date_to') ? new \DateTime($request->query->get('date_to')) : null;
         $search = $request->query->get('q') ?: null;
+        $userId = $request->query->get('user');
 
-        $games = $gameRepository->findAvailableGamesFiltered($genreId, $dateFrom, $dateTo, $search);
+        $games = $gameRepository->findAvailableGamesFiltered($genreId, $dateFrom, $dateTo, $search, $userId);
         $genres = $genreRepo->findAll();
 
         return $this->render('home/index.html.twig', [
@@ -28,4 +29,17 @@ final class PublicController extends AbstractController
             'genres' => $genres,
         ]);
     }
+
+    #[Route('/about-us', name: 'about_us')]
+    public function aboutUs(): Response
+    {
+        return $this->render('home/aboutus.html.twig'); 
+    }
+
+    #[Route('/contact-us', name: 'contact_us')]
+    public function contactUs(): Response
+    {
+        return $this->render('home/contactus.html.twig'); 
+    }
+
 }

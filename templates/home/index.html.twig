@@ -22,8 +22,7 @@
 
 					<div class="col-md-2">
 						<label class="filter-label">Género</label>
-						<select name="genre" class="input-select form-select"
-							style="max-width: 110%;">
+						<select name="genre" class="input-select form-select" style="max-width: 110%;">
 							<option value="">Todos los géneros</option>
 							{% for genre in genres %}
 								<option value="{{ genre.id }}" {% if app.request.get('genre') == genre.id %} selected {% endif %}>
@@ -113,10 +112,22 @@
 				{% else %}
 					<div class="col-md-12">
 						<div class="alert alert-info text-center">
-							No hay juegos disponibles ahora mismo.
+							{% set hasFilters = app.request.get('q') or app.request.get('genre') or app.request.get('date_from') or app.request.get('date_to') %}
+
+							{% if hasFilters %}
+								No hay resultados para los filtros aplicados.
+								<br>
+								<a href="{{ path('home') }}" class="btn btn-secondary mt-3">
+									<i class="fa fa-undo"></i>
+									Restablecer filtros
+								</a>
+							{% else %}
+								No hay juegos disponibles ahora mismo.
+							{% endif %}
 						</div>
 					</div>
 				{% endfor %}
+
 
 			</div>
 

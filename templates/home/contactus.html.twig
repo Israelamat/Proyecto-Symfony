@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacto | GameHub
+{% endblock %}
+
+{% block body %}
+	<div class="section py-5">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-md-12 text-center">
+					<h1 class="display-4 fw-bold">Contacta con nosotros</h1>
+					<p class="lead">¿Tienes dudas o sugerencias? ¡Envíanos un mensaje y te responderemos lo antes posible!</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					{% for label, messages in app.flashes %}
+						{% for message in messages %}
+							<div class="alert alert-{{ label }}">{{ message }}</div>
+						{% endfor %}
+					{% endfor %}
+
+					<form method="post" action="">
+						<div style="margin-bottom: 15px;">
+							<label for="name" class="form-label">Nombre</label>
+							<input type="text" class="form-control" id="name" name="name" required>
+						</div>
+
+						<div style="margin-bottom: 15px;">
+							<label for="email" class="form-label">Email</label>
+							<input type="email" class="form-control" id="email" name="email" required>
+						</div>
+
+						<div style="margin-bottom: 15px;">
+							<label for="subject" class="form-label">Asunto</label>
+							<input type="text" class="form-control" id="subject" name="subject" required>
+						</div>
+
+						<div style="margin-bottom: 15px;">
+							<label for="message" class="form-label">Mensaje</label>
+							<textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+						</div>
+
+						<button type="submit" class="btn btn-danger btn-lg w-100">
+							<i class="fa fa-envelope"></i>
+							Enviar mensaje
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

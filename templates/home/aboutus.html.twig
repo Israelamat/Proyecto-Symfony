@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sobre Nosotros | GameHub{% endblock %}
+
+{% block body %}
+<div class="section py-5">
+    <div class="container" style="font-size: 2rem; line-height: 1.6;">
+
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 fw-bold">Sobre Nosotros</h1>
+                <p class="lead">GameHub es tu plataforma para comprar y vender videojuegos de forma segura y divertida.</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center" style="margin-bottom: 40px;">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="{{ asset('img/about-gaming.jpg') }}" 
+                    style="max-width: 100%; height: auto; border-radius: 25px;"
+                    alt="Videojuegos" class="img-fluid shadow">
+            </div>
+            <div class="col-md-6" >
+                <h2 class="fw-bold mb-3">Compra y venta de videojuegos</h2>
+                <p>En GameHub, los usuarios pueden vender sus juegos usados o nuevos y otros usuarios pueden comprarlos fácilmente. Nuestra plataforma ofrece seguridad, transparencia y comodidad para todos los amantes de los videojuegos.</p>
+                <p>Explora nuestro catálogo, encuentra los mejores títulos y disfruta de una experiencia de compra confiable.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            <div class="col-md-6 order-md-1">
+                <h2 class="fw-bold mb-3">Únete a nuestra comunidad</h2>
+                <p>GameHub no solo es una tienda, sino una comunidad de jugadores. Conecta con otros usuarios, descubre recomendaciones y comparte tus experiencias con la comunidad.</p>
+                <p>Ya seas comprador o vendedor, nuestra prioridad es que tengas una experiencia divertida y segura en cada transacción.</p>
+            </div>
+            <div class="col-md-6 order-md-2 mb-4 mb-md-0">
+                <img src="{{ asset('img/about-community.avif') }}" 
+                    style="max-width: 100%; height: auto; border-radius: 25px;"
+                alt="Comunidad de jugadores" class="img-fluid rounded shadow">
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

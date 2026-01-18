@@ -25,7 +25,7 @@
                                         
 
                     <div>
-                        <a class="review-link">
+                        <a class="review-link" href="{{ path('home', { user: game.user.id }) }}">
                             Publicado por
                             <span class="badge bg-secondary">
                                 {{ game.user.name }}
