@@ -6,11 +6,12 @@
 				<!-- LOGO -->
 				<div class="col-md-3">
 					<div class="header-logo">
-						<a href="#" class="logo">
-							<img src="{{ asset('img/logo.png') }}" alt="">
+						<a href="{{ path('home') }}" class="logo-text">
+							GameHub<span class="logo-dot">.</span>
 						</a>
 					</div>
 				</div>
+
 				<!-- /LOGO -->
 
 				<!-- SEARCH BAR -->
@@ -34,7 +35,8 @@
 						{% if is_granted('IS_AUTHENTICATED') %}
 							<a class="auth-btn" href={{ path('app_logout') }}>
 								<i class="fa fa-sign-out sr-icons"></i>
-								Salir - {{ app.user.name }}
+								Salir -
+								{{ app.user.name }}
 							</a>
 						{% else %}
 							<a class="auth-btn" href={{ path('app_login') }}>

@@ -18,271 +18,109 @@
 			</div>
 
 			<div class="row filters-row mt-3 mb-4">
-				<div class="col-md-2">
-					<label class="filter-label">Género</label>
-					<select class="input-select form-select">
-						<option value="">Todos los géneros</option>
-						<option value="accion">Acción</option>
-						<option value="aventura">Aventura</option>
-						<option value="rpg">RPG</option>
-						<option value="estrategia">Estrategia</option>
-						<option value="deportes">Deportes</option>
-					</select>
-				</div>
+				<form method="get" action="{{ path('home') }}" class="row g-2">
 
-				<div class="col-md-2">
-					<label class="filter-label">Desde</label>
-					<input type="date" class="input form-control">
-				</div>
+					<div class="col-md-2">
+						<label class="filter-label">Género</label>
+						<select name="genre" class="input-select form-select"
+							style="max-width: 110%;">
+							<option value="">Todos los géneros</option>
+							{% for genre in genres %}
+								<option value="{{ genre.id }}" {% if app.request.get('genre') == genre.id %} selected {% endif %}>
+									{{ genre.name }}
+								</option>
+							{% endfor %}
+						</select>
+					</div>
 
-				<div class="col-md-2">
-					<label class="filter-label">Hasta</label>
-					<input type="date" class="input form-control">
-				</div>
+					<div class="col-md-2">
+						<label class="filter-label">Desde</label>
+						<input type="date" name="date_from" class="input form-control" value="{{ app.request.get('date_from') }}">
+					</div>
 
-				<div class="col-md-4">
-					<label class="filter-label">Buscar juego</label>
-					<input type="text" class="input form-control" placeholder="Título o descripción">
-				</div>
+					<div class="col-md-2">
+						<label class="filter-label">Hasta</label>
+						<input type="date" name="date_to" class="input form-control" value="{{ app.request.get('date_to') }}">
+					</div>
 
-				<div class="col-md-2">
-					<button class="btn btn-danger" style="margin-top: 16px; width: 100%;font-size: 18px;">
-						<i class="fa fa-search"></i>
-						Buscar
-					</button>
-				</div>
+					<div class="col-md-3">
+						<label class="filter-label">Buscar juego</label>
+						<input type="text" name="q" class="input form-control" placeholder="Título o descripción" value="{{ app.request.get('q') }}">
+					</div>
+
+					<div class="col-md-2">
+						<button class="btn btn-danger" style="margin-top: 16px; width: 100%; font-size: 18px;">
+							<i class="fa fa-search"></i>
+							Buscar
+						</button>
+					</div>
+
+				</form>
+			</div>
+
+
+			<div class="row" style="margin-bottom: 50px;">
+
+				{% for game in games %}
+					<div class="col-md-4">
+						<div class="product">
+
+							<div class="product-img">
+								<img class="game-grid-img" src="{{ game.image ? asset('uploads/games/' ~ game.image) : asset('img/default-game.jpg') }}" alt="{{ game.title }}">
+								<div class="product-label">
+									<span class="sale">
+										{{ game.createdAt|date('d/m') }}
+									</span>
+								</div>
+							</div>
+
+							<div class="product-body">
+								<p class="product-category">
+									Vendido por
+									<span class="badge">{{ game.user.name }}</span>
+								</p>
+
+								<h3 class="product-name">
+									<a href="{{ path('game_show', {id: game.id}) }}">
+										{{ game.title }}
+									</a>
+								</h3>
+
+								<h4 class="product-price">
+									€{{ game.price|number_format(2, '.', ',') }}
+								</h4>
+
+								<div class="product-btns">
+									<a href="{{ path('game_show', {id: game.id}) }}" class="quick-view">
+										<i class="fa fa-eye"></i>
+										<span class="tooltipp">Ver más</span>
+									</a>
+								</div>
+							</div>
+
+							{% if app.user and app.user == game.user %}
+								<div class="add-to-cart">
+									<a href="{{ path('game_edit', {id: game.id}) }}" class="add-to-cart-btn">
+										<i class="fa fa-edit"></i>
+										editar juego
+									</a>
+								</div>
+							{% endif %}
+
+						</div>
+					</div>
+
+				{% else %}
+					<div class="col-md-12">
+						<div class="alert alert-info text-center">
+							No hay juegos disponibles ahora mismo.
+						</div>
+					</div>
+				{% endfor %}
 
 			</div>
 
 
-			<div class="row">
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="product">
-						<div class="product-img">
-							<img class="game-grid-img" src="./img/elden.jpg" alt="">
-							<div class="product-label">
-								<span class="sale">14/01</span>
-							</div>
-						</div>
-						<div class="product-body">
-							<p class="product-category">Vendido por
-								<span class="badge">Pepe</span>
-							</p>
-							<h3 class="product-name">
-								<a href="#">Eldenring</a>
-							</h3>
-							<h4 class="product-price">€40.00</h4>
-
-							<div class="product-btns">
-								<button class="quick-view">
-									<i class="fa fa-eye"></i>
-									<span class="tooltipp">ver más</span>
-								</button>
-							</div>
-						</div>
-						<div class="add-to-cart">
-							<button class="add-to-cart-btn">
-								<i class="fa fa-edit"></i>
-								editar juego</button>
-						</div>
-					</div>
-				</div>
-
-			</div>
 		</div>
 	</div>
 {% endblock %}

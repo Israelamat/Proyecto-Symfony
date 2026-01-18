@@ -17,7 +17,7 @@ class Purchase
     #[ORM\JoinColumn(nullable: false)]
     private ?User $buyer = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\OneToOne(inversedBy: 'purchase', targetEntity: Game::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Game $game = null;
 

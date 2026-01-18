@@ -42,7 +42,8 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY } 
         - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/captcha, roles: PUBLIC_ACCESS}
+        - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: ^/juegos, roles: ROLE_USER }
         - { path: ^/compras, roles: ROLE_USER }
 

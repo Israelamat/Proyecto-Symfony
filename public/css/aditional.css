@@ -178,6 +178,30 @@
     margin-bottom: 10px;
 }
 
+/* Logo  */
+.header-logo {
+    padding: 10px 0;
+}
+
+.logo-text {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FFF;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo-text:hover {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.logo-dot {
+    color: #D10024;
+}
+
 @media only screen and (max-width: 991px) {
     .header-auth .menu-toggle {
         display: inline-block;
