@@ -76,7 +76,18 @@ class AdminController extends AbstractController
     #[Route('/usuarios/eliminar/{id}', name: 'admin_users_delete', methods: ['POST'])]
     public function eliminar(User $user, EntityManagerInterface $em, Request $request): Response
     {
-        // TODO: comprobar si tiene elementos creados antes de eliminar
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        if ($user->getGames() && count($user->getGames()) > 0) {
+            $this->addFlash('error', 'No puedes eliminar este usuario porque tiene juegos creados.');
+            return $this->redirectToRoute('admin_users');
+        }
+
+        if ($user->getPurchases() && $user->getPurchases()->count() > 0) {
+            $this->addFlash('error','No se puede eliminar el usuario porque ha realizado compras.');
+            return $this->redirectToRoute('admin_users');
+        }
+
         $em->remove($user);
         $em->flush();
 

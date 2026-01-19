@@ -77,14 +77,15 @@
 
 									{% for label, messages in app.flashes %}
 										{% for message in messages %}
-											<div class="alert alert-{{ label }}">{{ message }}</div>
+											{% set type = label == 'error' ? 'danger' : 'success' %}
+											<div class="alert alert-{{ type }}">{{ message }}</div>
 										{% endfor %}
 									{% endfor %}
 
 									{{ form_start(passwordForm, {
-        'method': 'POST',
-        'action': path('profile_password')
-    }) }}
+										'method': 'POST',
+										'action': path('profile_password')
+									}) }}
 
 									<div class="form-group">
 										{{ form_label(passwordForm.currentPassword) }}
@@ -127,7 +128,8 @@
 
 									{% for label, messages in app.flashes %}
 										{% for message in messages %}
-											<div class="alert alert-{{ label }}">{{ message }}</div>
+											{% set type = label == 'error' ? 'danger' : 'success' %}
+											<div class="alert alert-{{ type }}">{{ message }}</div>
 										{% endfor %}
 									{% endfor %}
 

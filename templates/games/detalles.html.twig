@@ -1,89 +1,104 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ game.title }} | Tienda de Videojuegos{% endblock %}
+{% block title %}
+	{{ game.title }}
+	| Tienda de Videojuegos
+{% endblock %}
 
 {% block body %}
-<div class="section">
-    <div class="container">
-        <div class="row">
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						{% set type = label == 'error' ? 'danger' : 'success' %}
+						<div class="alert alert-{{ type }}">{{ message }}</div>
+					{% endfor %}
+				{% endfor %}
 
-            <div class="col-md-6">
-                <div id="product-main-img">
-                    <img src="{{ asset('uploads/games/' ~ game.image) }}" 
-					alt="{{ game.title }}" class="img-responsive">
-                </div>
-            </div>
+				<div class="col-md-6">
+					<div id="product-main-img">
+						<img src="{{ asset('uploads/games/' ~ game.image) }}" alt="{{ game.title }}" class="img-responsive">
+					</div>
+				</div>
 
-            <div class="col-md-6">
-                <div class="product-details">
+				<div class="col-md-6">
+					<div class="product-details">
 
-                    <h2 class="product-name">{{ game.title }}</h2>
-                    
-                    {% if game.purchase  %}
-                        <span class="badge badge-comprado">Comprado</span>
-                    {% endif %}
-                                        
+						<h2 class="product-name">{{ game.title }}</h2>
 
-                    <div>
-                        <a class="review-link" href="{{ path('home', { user: game.user.id }) }}">
-                            Publicado por
-                            <span class="badge bg-secondary">
-                                {{ game.user.name }}
-                            </span>
-                        </a>
-                    </div>
+						{% if game.purchase  %}
+							<span class="badge badge-comprado">Comprado</span>
+						{% endif %}
 
-                    <div>
-                        <h3 class="product-price">€{{ game.price|number_format(2, '.', ',') }}</h3>
-                    </div>
 
-                    <ul class="product-links">
-                        <li>Géneros:</li>
-                        {% for genre in game.genres %}
-                            <li>
-                                <span class="badge bg-dark">{{ genre.name }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-
-                    <ul class="product-links">
-                        <li>Publicado:</li>
-                        <li>{{ game.createdAt|date('d/m/Y') }}</li>
-                    </ul>
-
-                    <p style="margin-top: 10px;">
-                        {{ game.description }}
-                    </p>
-
-                    {% if isOwner %}
-                        <div class="mt-4">
-                            <a href="{{ path('game_edit', {id: game.id}) }}" class="btn btn-sm btn-warning me-2">
-                                <i class="fa fa-edit"></i> Editar
-                            </a>
-
-							<a href="{{ path('game_delete', {id: game.id}) }}" 
-								class="btn btn-sm btn-danger" 
-								onclick="return confirm('¿Seguro que quieres eliminar el juego {{ game.title }}? Esta acción no se puede deshacer.');">
-								<i class="fa fa-trash"></i>
-								Eliminar
+						<div>
+							<a class="review-link" href="{{ path('home', { user: game.user.id }) }}">
+								Publicado por
+								<span class="badge bg-secondary">
+									{{ game.user.name }}
+								</span>
 							</a>
-                        </div>
-                    {% else %}
-                        {% if game.purchase==null %}
-                            <div class="add-to-cart" style="margin-top:20px; margin-left:20px;">
-                                <a href="{{ path('game_buy', {id:game.id})}}" class="add-to-cart-btn">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Comprar juego
-                                </a>
-                            </div>
-                        {% endif %}
-                        
-                    {% endif %}
+						</div>
 
-                </div>
-            </div>
+						<div>
+							<h3 class="product-price">€{{ game.price|number_format(2, '.', ',') }}</h3>
+						</div>
 
-        </div>
-    </div>
-</div>
+						<ul class="product-links">
+							<li>Géneros:</li>
+							{% for genre in game.genres %}
+								<li>
+									<span class="badge bg-dark">{{ genre.name }}</span>
+								</li>
+							{% endfor %}
+						</ul>
+
+						<ul class="product-links">
+							<li>Publicado:</li>
+							<li>{{ game.createdAt|date('d/m/Y') }}</li>
+						</ul>
+
+						<p style="margin-top: 10px;">
+							{{ game.description }}
+						</p>
+
+
+						{% if isOwner or is_granted('ROLE_ADMIN') %}
+							<div class="mt-4">
+								{% if is_granted('ROLE_ADMIN') %}
+									<span class="badge" style="margin-right: 10px; padding: 10px;">
+										<i class="fa fa-shield"></i>
+										Admin
+									</span>
+								{% endif %}
+
+								<a href="{{ path('game_edit', {id: game.id}) }}" class="btn btn-sm btn-warning me-2">
+									<i class="fa fa-edit"></i>
+									Editar
+								</a>
+
+								<a href="{{ path('game_delete', {id: game.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el juego {{ game.title }}? Esta acción no se puede deshacer.');">
+									<i class="fa fa-trash"></i>
+									Eliminar
+								</a>
+							</div>
+						{% endif %}
+
+						{% if game.purchase==null and not isOwner %}
+							<div class="add-to-cart" style="margin-top:20px; margin-left:20px;">
+								<a href="{{ path('game_buy', {id:game.id})}}" class="add-to-cart-btn">
+									<i class="fa fa-shopping-cart"></i>
+									Comprar juego
+								</a>
+							</div>
+						{% endif %}
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 {% endblock %}

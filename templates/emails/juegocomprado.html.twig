@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tu juego ha sido vendido</title>
+</head>
+<body style="font-family: Arial, sans-serif; background:#f5f5f5; padding:20px;">
+
+    <div style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:8px;">
+        <h2 style="color:#D10024;">¡Buenas noticias! 🎮</h2>
+
+        <p>
+            El usuario <strong>{{ buyer.name }}</strong>
+            ha comprado tu juego:
+        </p>
+
+        <h3>{{ game.title }}</h3>
+
+        <p>
+            <strong>Precio:</strong> €{{ game.price|number_format(2, '.', ',') }}
+        </p>
+
+        <p>
+            <a href="{{ gameUrl }}"
+               style="display:inline-block; padding:10px 20px; background:#D10024; color:white; text-decoration:none; border-radius:20px;">
+                Ver juego
+            </a>
+        </p>
+
+        <hr>
+
+        <p style="font-size:12px; color:#777;">
+            Este mensaje ha sido enviado automáticamente por <strong>GameHub</strong>.
+        </p>
+    </div>
+
+</body>
+</html>

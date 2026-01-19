@@ -95,7 +95,7 @@ class GameController extends AbstractController
         Request $request,
         EntityManagerInterface $em
     ): Response {
-        if ($game->getUser() !== $this->getUser()) {
+        if ($game->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
@@ -138,18 +138,16 @@ class GameController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($game->getUser() !== $user) {
+        if ($game->getUser() !== $user && !$this->isGranted('ROLE_ADMIN')) {
             $this->addFlash('error', 'No puedes eliminar un juego que no te pertenece.');
             return $this->redirectToRoute('user_games');
         }
 
-        // TODO: eliminar juego solo si no tiene compra asociada
-        /*
-        if ($game->getOrders() && count($game->getOrders()) > 0) {
+        if ($game->getPurchase() !== null) {
             $this->addFlash('error', 'No puedes eliminar este juego porque ya ha sido comprado.');
-            return $this->redirectToRoute('user_games');
+            return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
         }
-        */
+
         $em->remove($game);
         $em->flush();
 
