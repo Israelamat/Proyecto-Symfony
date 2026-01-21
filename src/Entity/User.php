@@ -47,10 +47,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'buyer', targetEntity: Purchase::class)]
     private Collection $purchases;
 
+    #[ORM\OneToMany(mappedBy: 'organizer', targetEntity: Event::class)]
+    private Collection $eventsOrganized;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
         $this->purchases = new ArrayCollection();   
+        $this->eventsOrganized = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +207,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->purchases->removeElement($purchase)) {
             if ($purchase->getBuyer() === $this) {
                 $purchase->setBuyer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEventsOrganized(): Collection
+    {
+        return $this->eventsOrganized;
+    }
+
+    public function addEventOrganized(Event $event): static
+    {
+        if (!$this->eventsOrganized->contains($event)) {
+            $this->eventsOrganized->add($event);
+            $event->setOrganizer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventOrganized(Event $event): static
+    {
+        if ($this->eventsOrganized->removeElement($event)) {
+            if ($event->getOrganizer() === $this) {
+                $event->setOrganizer(null);
             }
         }
 

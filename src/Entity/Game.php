@@ -44,10 +44,14 @@ class Game
     #[ORM\OneToOne(mappedBy: 'game', targetEntity: Purchase::class)]
     private ?Purchase $purchase = null;
 
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'games')]
+    private Collection $events;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->genres = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +179,30 @@ class Game
         }
 
         $this->purchase = $purchase;
+
+        return $this;
+    }
+
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->addGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeGame($this);
+        }
 
         return $this;
     }
