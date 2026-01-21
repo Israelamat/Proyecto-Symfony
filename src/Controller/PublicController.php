@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class PublicController extends AbstractController
@@ -37,9 +39,40 @@ final class PublicController extends AbstractController
     }
 
     #[Route('/contact-us', name: 'contact_us')]
-    public function contactUs(): Response
+    public function contactUs(Request $request, MailerInterface $mailer): Response
     {
-        return $this->render('home/contactus.html.twig'); 
+        if ($request->isMethod('POST')) {
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $subject = $request->request->get('subject');
+            $messageContent = $request->request->get('message');
+
+            if (!$name || !$email || !$subject || !$messageContent) {
+                $this->addFlash('error', 'Todos los campos son obligatorios.');
+                return $this->redirectToRoute('contact_us');
+            }
+
+            $emailMessage = (new Email())
+                ->from('noreply@gamehub.com') 
+                ->to($email) 
+                ->subject('Hemos recibido tu mensaje: ' . $subject)
+                ->html($this->renderView('emails/contacto.html.twig', [
+                    'name' => $name,
+                    'subject' => $subject,
+                    'message' => $messageContent,
+                ]));
+
+            try {
+                $mailer->send($emailMessage);
+                $this->addFlash('success', 'Tu mensaje ha sido enviado. Revisa tu correo para confirmación.');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'No se pudo enviar el mensaje. Inténtalo más tarde.');
+            }
+
+            return $this->redirectToRoute('contact_us');
+        }
+
+        return $this->render('home/contactus.html.twig');
     }
 
 }
