@@ -99,6 +99,49 @@
 				</div>
 
 			</div>
+
+
+			<div class="row">
+				{% if game.getEvents()|length > 0 %}
+					<hr>
+
+					<h4 style="margin-top:20px;">
+						<i class="fa fa-calendar"></i>
+						Eventos en los que participa este juego
+					</h4>
+
+					<div class="list-group mt-3">
+						{% for event in game.events %}
+							<div class="col-md-12 mb-3">
+								<div
+									class="card" style="display:flex; align-items:center; padding:15px; gap:15px;">
+
+									<div style="flex-shrink:0;">
+										<img src="{{ asset('uploads/avatars/' ~ event.organizer.avatar) }}" 
+											alt="{{ game.title }}" 
+											style="width:80px; height:80px; object-fit:cover; border-radius:25px;">
+									</div>
+
+									<div style="flex-grow:1;">
+										<h4 style="font-weight:700; font-size:1.7rem; margin-bottom:5px;">{{ event.name }}</h4>
+										<p style="margin:0;">{{ event.description }}</p>
+									</div>
+
+									<div style="flex-shrink:0; text-align:right;">
+										<small style="display:block; font-weight:600;">{{ event.eventDate|date('d/m/Y H:i') }}</small>
+										<div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; margin-top:5px;">
+											<span>Organizado por <span class="badge bg-secondary">{{ event.organizer.name }}</span></span>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+			</div>
+
 		</div>
 	</div>
 {% endblock %}
