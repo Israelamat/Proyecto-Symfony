@@ -43,9 +43,13 @@ security:
         - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY } 
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/captcha, roles: PUBLIC_ACCESS}
-        - { path: ^/, roles: PUBLIC_ACCESS }
         - { path: ^/juegos, roles: ROLE_USER }
         - { path: ^/compras, roles: ROLE_USER }
+        - { path: ^/eventos, roles: ROLE_USER }
+        - { path: ^/about-us, roles: PUBLIC_ACCESS }
+        - { path: ^/contact-us, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: PUBLIC_ACCESS }
+
 
 
 when@test:
