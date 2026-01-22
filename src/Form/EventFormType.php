@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventFormType extends AbstractType
 {
@@ -17,14 +18,29 @@ class EventFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nombre del evento'
+                'label' => 'Nombre del evento',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'El nombre del evento no puede estar vacío.'
+                    ])
+                ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Descripción'
+                'label' => 'Descripción',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'La descripción no puede estar vacía.'
+                    ])
+                ]
             ])
             ->add('eventDate', DateType::class, [
                 'widget' => 'single_text',
-                'label' => 'Fecha del evento'
+                'label' => 'Fecha del evento',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'La fecha del evento no puede estar vacía.'
+                    ])
+                ]
             ])
             ->add('games', EntityType::class, [
                 'class' => Game::class,
@@ -32,7 +48,12 @@ class EventFormType extends AbstractType
                 'choice_label' => 'title',
                 'multiple' => true,
                 'expanded' => true, 
-                'label' => 'Juegos del evento'
+                'label' => 'Juegos del evento',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Debe seleccionar al menos un juego para el evento.'
+                    ])
+                ]
             ]);
     }
 

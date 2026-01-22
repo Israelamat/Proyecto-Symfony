@@ -29,6 +29,11 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('email', null, [
                 'label' => 'Correo electrónico',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Introduce tu correo electrónico',
+                    ]),
+                ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
