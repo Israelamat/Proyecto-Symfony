@@ -22,6 +22,13 @@ final class PublicController extends AbstractController
         $dateTo = $request->query->get('date_to') ? new \DateTime($request->query->get('date_to')) : null;
         $search = $request->query->get('q') ?: null;
         $userId = $request->query->get('user');
+        $genreName = $request->query->get('genre_name');
+
+        if (!$genreId && $genreName) {
+            // Para el caso de que se filtre por nombre de género desde el footer
+            $genre = $genreRepo->findOneBy(['name' => $genreName]);
+            $genreId = $genre ? $genre->getId() : null;
+        }
 
         $games = $gameRepository->findAvailableGamesFiltered($genreId, $dateFrom, $dateTo, $search, $userId);
         $genres = $genreRepo->findAll();

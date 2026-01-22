@@ -29,19 +29,19 @@
 						<h3 class="footer-title">Generos más populares</h3>
 						<ul class="footer-links">
 							<li>
-								<a href="#">RPG</a>
+								<a href="{{ path('home', { genre_name: 'RPG' }) }}">RPG</a>
 							</li>
 							<li>
-								<a href="#">Acción</a>
+								<a href="{{ path('home', { genre_name: 'Acción' }) }}">Acción</a>
 							</li>
 							<li>
-								<a href="#">Indie</a>
+								<a href="{{ path('home', { genre_name: 'Indie' }) }}">Indie</a>
 							</li>
 							<li>
-								<a href="#">Survival</a>
+								<a href="{{ path('home', { genre_name: 'Survival' }) }}">Survival</a>
 							</li>
 							<li>
-								<a href="#">Multijugador</a>
+								<a href="{{ path('home', { genre_name: 'Multijugador' }) }}">Multijugador</a>
 							</li>
 						</ul>
 					</div>
@@ -77,7 +77,8 @@
 			<div class="row">
 				<div class="col-md-12 text-center">
 
-					<span class="copyright">
+					<span
+						class="copyright">
 						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;<script>
 							document.write(new Date().getFullYear());
