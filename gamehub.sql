@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 
 -- FLUSH PRIVILEGES;
 
-
 CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) NOT NULL,
   `executed_at` datetime DEFAULT NULL,
