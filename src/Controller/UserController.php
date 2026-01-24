@@ -46,6 +46,7 @@ class UserController extends AbstractController
 
         $form = $this->createForm(AvatarFormType::class);
         $form->handleRequest($request);
+        $passwordform = $this->createForm(ChangePasswordFormType::class);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $avatarFile */
@@ -81,6 +82,7 @@ class UserController extends AbstractController
         return $this->render('profile/profile.html.twig', [
             'avatarForm' => $form->createView(),
             'user' => $user,
+            'passwordForm' => $passwordform->createView(),
             'tab' => 'avatar',
         ]);
     }

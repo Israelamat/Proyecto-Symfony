@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	- Error 404
+{% endblock %}
+
+{% block body %}
+	<style>
+		.error-wrapper {
+			margin: 5em auto;
+			max-width: 800px;
+			width: 100%;
+			font: 18px / 1.5 sans-serif;
+            margin-bottom: 15em;
+		}
+	</style>
+	<div class="error-wrapper">
+		<br><br>
+		<h1>Error 404 - Página no encontrada</h1>
+		<h3>No se ha encontrado el elemento buscado</h3>
+        <p>Lo sentimos, pero la página que buscas no existe. </p>
+	</div>
+{% endblock %}

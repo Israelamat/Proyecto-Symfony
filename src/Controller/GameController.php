@@ -49,7 +49,7 @@ class GameController extends AbstractController
 
             $this->addFlash('success', 'Juego añadido correctamente');
 
-            return $this->redirectToRoute('user_profile');
+            return $this->redirectToRoute('user_games');
         }
 
         return $this->render('games/crearjuego.html.twig', [

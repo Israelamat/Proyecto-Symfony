@@ -1,22 +1,25 @@
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE DATABASE IF NOT EXISTS gamehub
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+-- No me es posible crear el usuario desde el script por internos del motor MySQL/MariaDB. El servidor devuelve errores #1034 y 
+-- #1030 (Error 176 – checksum incorrecto en Aria), lo que hay una corrupción en tablas del sistema en mysql.global_priv. Al estar dañadas 
+-- las tablas internas de privilegios, MySQL no puede procesar correctamente el comando CREATE USER, aunque el script sea válido.
 
-USE gamehub;
+-- CREATE DATABASE IF NOT EXISTS gamehub
+--   CHARACTER SET utf8mb4
+--   COLLATE utf8mb4_unicode_ci;
 
-CREATE USER IF NOT EXISTS 'gamehub_user'@'localhost'
-IDENTIFIED BY 'gamehub_password';
+-- USE gamehub;
 
-GRANT SELECT, INSERT, UPDATE, DELETE
-ON gamehub.*
-TO 'gamehub_user'@'localhost';
+-- CREATE USER IF NOT EXISTS 'gamehub_user'@'localhost'
+-- IDENTIFIED BY 'gamehub_password';
 
-FLUSH PRIVILEGES;
+-- GRANT SELECT, INSERT, UPDATE, DELETE
+-- ON gamehub.*
+-- TO 'gamehub_user'@'localhost';
+
+-- FLUSH PRIVILEGES;
 
 
 CREATE TABLE `doctrine_migration_versions` (
@@ -99,9 +102,12 @@ CREATE TABLE `game` (
 --
 
 INSERT INTO `game` (`id`, `title`, `description`, `image`, `year`, `created_at`, `user_id`, `price`) VALUES
-(2, 'Eldenring con dlc', 'un mundo magico donde todos te quieren matar y tu haces el rol de la victima', 'c8ed6a5c42241ec0d4d12515d40848ad.jpg', 2022, '2026-01-15 19:44:07', 1, 30.00),
-(4, 'God of war ragnarok', 'kratos se pega con dioses nordicos', '9d3949a7e66b320a5f15c54f2730cb16.jpg', 2018, '2026-01-19 19:55:27', 2, 29.90),
-(5, 'juego prueba 1', 'rgrgrgredh', '7dd389b7744c77cade1a8d67591c72fb.jpg', 2022, '2026-01-19 21:05:35', 3, 30.00);
+(2, 'Eldenring con dlc', 'un mundo magico donde todos te quieren matar y tu haces el rol de la victima', 'c8ed6a5c42241ec0d4d12515d40848ad.jpg', 2022, '2026-01-15 19:44:07', 1, '30.00'),
+(4, 'God of war ragnarok', 'kratos se pega con dioses nordicos', '69751f36b492b.jpg', 2018, '2026-01-19 19:55:27', 2, '29.90'),
+(5, 'juego prueba 1', 'rgrgrgredh', '7dd389b7744c77cade1a8d67591c72fb.jpg', 2022, '2026-01-19 21:05:35', 3, '30.00'),
+(6, 'witcher 3', 'Buen juego 10/10', '76e68a3649ed59a9c1c6e27a98916ea8.jpg', 2002, '2026-01-24 20:53:56', 5, '29.90'),
+(7, 'Max Payne', 'La hostia de juego de verdad lo recomiendo', '60c5b5d581dc28c217eb3a927d3f1f7c.jpg', 2012, '2026-01-24 20:55:43', 5, '29.90'),
+(8, 'Red Dead Redemption 2', 'Juego de vaqueros matando gente', '7286e8152c881046bbee4663b4ce29d7.jpg', 2018, '2026-01-24 20:59:44', 6, '29.90');
 
 -- --------------------------------------------------------
 
@@ -123,7 +129,17 @@ INSERT INTO `game_genre` (`game_id`, `genre_id`) VALUES
 (2, 2),
 (4, 1),
 (4, 3),
-(5, 7);
+(5, 7),
+(6, 1),
+(6, 2),
+(6, 3),
+(7, 1),
+(7, 13),
+(7, 15),
+(8, 1),
+(8, 2),
+(8, 13),
+(8, 15);
 
 -- --------------------------------------------------------
 
@@ -181,7 +197,7 @@ CREATE TABLE `purchase` (
 --
 
 INSERT INTO `purchase` (`id`, `price`, `purchased_at`, `buyer_id`, `game_id`) VALUES
-(3, 30.00, '2026-01-19 21:06:02', 1, 5);
+(3, '30.00', '2026-01-19 21:06:02', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -204,9 +220,11 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `name`, `avatar`) VALUES
 (1, 'juan@mail.com', '[\"ROLE_USER\"]', '$2y$13$ViQCW1OX7QHYiUXJZbo.Zeo4IEnUY0MNyovxm17YlLU.QJ8WjFSC2', 'juan', '82751eb475a817ed19efca81b2e5a4a2.jpg'),
-(2, 'admin@gmail.com', '[\"ROLE_USER\", \"ROLE_ADMIN\"]', '$2y$13$HcfuXK3qorg4cvLn8Q33MOga3GUwwqgiOb1f1jpgkS9KE5I8j2Yv2', 'admin', 'default.jpg'),
+(2, 'admin@gmail.com', '[\"ROLE_USER\", \"ROLE_ADMIN\"]', '$2y$13$HcfuXK3qorg4cvLn8Q33MOga3GUwwqgiOb1f1jpgkS9KE5I8j2Yv2', 'admin', '070477343309760dff935728a5878a94.jpg'),
 (3, 'erik.avagyan2001@gmail.com', '[\"ROLE_USER\"]', '$2y$13$vVQqVR/hfZ5JyBmHzlZ0yuL6/WhV9Wxx3wDKrc1dAZKBne9nj5bze', 'erik', 'default.jpg'),
-(4, 'admin', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$UfuG9fs/7acIphcHR.vvOeLcB2xoKV4PKM/3bsXLsX2JMEjBvQTHC', 'admin', 'default.jpg');
+(4, 'admin', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$UfuG9fs/7acIphcHR.vvOeLcB2xoKV4PKM/3bsXLsX2JMEjBvQTHC', 'admin', 'default.jpg'),
+(5, 'isra@mail.com', '[\"ROLE_USER\"]', '$2y$13$KneQgAKR/FxwMqv7eBnzROGYhUzcLBxBpw604jTyEBWp5atFoRqRO', 'israel', 'default.jpg'),
+(6, 'mario@mail.com', '[\"ROLE_USER\"]', '$2y$13$2rwAMl7VdBUAZWz2emxoMOLFq11t2hrYyiHbw5kF8VmIlXruvMAvC', 'Mario', 'default.jpg');
 
 --
 -- Índices para tablas volcadas
@@ -284,7 +302,7 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT de la tabla `game`
 --
 ALTER TABLE `game`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `genre`
@@ -302,7 +320,7 @@ ALTER TABLE `purchase`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

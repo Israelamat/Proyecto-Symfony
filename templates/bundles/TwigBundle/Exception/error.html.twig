@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	- Error occurred
+{% endblock %}
+
+{% block body %}
+	<style>
+		.wrapper {
+			margin: 5em auto;
+			max-width: 800px;
+			width: 100%;
+			font: 18px / 1.5 sans-serif;
+            margin-bottom: 15em;
+		}
+	</style>
+	<div class="wrapper">
+		<br><br>
+		<h1>Algo ha ido mal</h1>
+	</div>
+{% endblock %}
