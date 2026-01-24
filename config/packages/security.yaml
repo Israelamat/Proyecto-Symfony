@@ -43,6 +43,7 @@ security:
         - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY } 
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/captcha, roles: PUBLIC_ACCESS}
+        - { path: ^/juegos/\d+, roles: PUBLIC_ACCESS }
         - { path: ^/juegos, roles: ROLE_USER }
         - { path: ^/compras, roles: ROLE_USER }
         - { path: ^/eventos, roles: ROLE_USER }

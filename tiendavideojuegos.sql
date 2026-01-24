@@ -1,4 +1,3 @@
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -17,7 +16,6 @@ ON gamehub.*
 TO 'gamehub_user'@'localhost';
 
 FLUSH PRIVILEGES;
-
 
 CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) NOT NULL,
