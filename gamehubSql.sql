@@ -1,6 +1,25 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 25-01-2026 a las 03:27:13
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `gamehub`
+--
 
 -- No me es posible crear el usuario desde el script por internos del motor MySQL/MariaDB. El servidor devuelve errores #1034 y 
 -- #1030 (Error 176 – checksum incorrecto en Aria), lo que hay una corrupción en tablas del sistema en mysql.global_priv. Al estar dañadas 
@@ -20,6 +39,13 @@ SET time_zone = "+00:00";
 -- TO 'gamehub_user'@'localhost';
 
 -- FLUSH PRIVILEGES;
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `doctrine_migration_versions`
+--
 
 CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) NOT NULL,
@@ -101,12 +127,11 @@ CREATE TABLE `game` (
 --
 
 INSERT INTO `game` (`id`, `title`, `description`, `image`, `year`, `created_at`, `user_id`, `price`) VALUES
-(2, 'Eldenring con dlc', 'un mundo magico donde todos te quieren matar y tu haces el rol de la victima', 'c8ed6a5c42241ec0d4d12515d40848ad.jpg', 2022, '2026-01-15 19:44:07', 1, '30.00'),
-(4, 'God of war ragnarok', 'kratos se pega con dioses nordicos', '69751f36b492b.jpg', 2018, '2026-01-19 19:55:27', 2, '29.90'),
-(5, 'juego prueba 1', 'rgrgrgredh', '7dd389b7744c77cade1a8d67591c72fb.jpg', 2022, '2026-01-19 21:05:35', 3, '30.00'),
-(6, 'witcher 3', 'Buen juego 10/10', '76e68a3649ed59a9c1c6e27a98916ea8.jpg', 2002, '2026-01-24 20:53:56', 5, '29.90'),
-(7, 'Max Payne', 'La hostia de juego de verdad lo recomiendo', '60c5b5d581dc28c217eb3a927d3f1f7c.jpg', 2012, '2026-01-24 20:55:43', 5, '29.90'),
-(8, 'Red Dead Redemption 2', 'Juego de vaqueros matando gente', '7286e8152c881046bbee4663b4ce29d7.jpg', 2018, '2026-01-24 20:59:44', 6, '29.90');
+(2, 'Eldenring con dlc', 'un mundo magico donde todos te quieren matar y tu haces el rol de la victima', 'c8ed6a5c42241ec0d4d12515d40848ad.jpg', 2022, '2026-01-15 19:44:07', 1, 30.00),
+(4, 'God of war ragnarok', 'kratos se pega con dioses nordicos', '69751f36b492b.jpg', 2018, '2026-01-19 19:55:27', 2, 29.90),
+(6, 'witcher 3', 'Buen juego 10/10', '76e68a3649ed59a9c1c6e27a98916ea8.jpg', 2002, '2026-01-24 20:53:56', 5, 29.90),
+(7, 'Max Payne', 'La hostia de juego de verdad lo recomiendo', '60c5b5d581dc28c217eb3a927d3f1f7c.jpg', 2012, '2026-01-24 20:55:43', 5, 29.90),
+(8, 'Red Dead Redemption 2', 'Juego de vaqueros matando gente', '7286e8152c881046bbee4663b4ce29d7.jpg', 2018, '2026-01-24 20:59:44', 6, 29.90);
 
 -- --------------------------------------------------------
 
@@ -128,7 +153,6 @@ INSERT INTO `game_genre` (`game_id`, `genre_id`) VALUES
 (2, 2),
 (4, 1),
 (4, 3),
-(5, 7),
 (6, 1),
 (6, 2),
 (6, 3),
@@ -191,13 +215,6 @@ CREATE TABLE `purchase` (
   `game_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `purchase`
---
-
-INSERT INTO `purchase` (`id`, `price`, `purchased_at`, `buyer_id`, `game_id`) VALUES
-(3, '30.00', '2026-01-19 21:06:02', 1, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -220,7 +237,6 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `name`, `avatar`) VALUES
 (1, 'juan@mail.com', '[\"ROLE_USER\"]', '$2y$13$ViQCW1OX7QHYiUXJZbo.Zeo4IEnUY0MNyovxm17YlLU.QJ8WjFSC2', 'juan', '82751eb475a817ed19efca81b2e5a4a2.jpg'),
 (2, 'admin@gmail.com', '[\"ROLE_USER\", \"ROLE_ADMIN\"]', '$2y$13$HcfuXK3qorg4cvLn8Q33MOga3GUwwqgiOb1f1jpgkS9KE5I8j2Yv2', 'admin', '070477343309760dff935728a5878a94.jpg'),
-(3, 'erik.avagyan2001@gmail.com', '[\"ROLE_USER\"]', '$2y$13$vVQqVR/hfZ5JyBmHzlZ0yuL6/WhV9Wxx3wDKrc1dAZKBne9nj5bze', 'erik', 'default.jpg'),
 (4, 'admin', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$UfuG9fs/7acIphcHR.vvOeLcB2xoKV4PKM/3bsXLsX2JMEjBvQTHC', 'admin', 'default.jpg'),
 (5, 'isra@mail.com', '[\"ROLE_USER\"]', '$2y$13$KneQgAKR/FxwMqv7eBnzROGYhUzcLBxBpw604jTyEBWp5atFoRqRO', 'israel', 'default.jpg'),
 (6, 'mario@mail.com', '[\"ROLE_USER\"]', '$2y$13$2rwAMl7VdBUAZWz2emxoMOLFq11t2hrYyiHbw5kF8VmIlXruvMAvC', 'Mario', 'default.jpg');
