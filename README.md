@@ -1,211 +1,170 @@
-# 📌 Proyecto Final – Plataforma de Gestión de Eventos
+# 🎮 GameHub – Premium Video Game E-commerce Platform
 
-## 📖 Descripción general
+## 📖 Project Overview
 
-Este proyecto es una aplicación web desarrollada como trabajo final, inspirada en el proyecto **“Galería de imágenes”** realizado con Symfony durante el segundo trimestre, pero con una **temática diferente y de libre elección**.
+**GameHub** is a high-performance web application developed with **Symfony**, designed for gamers to discover, manage, and purchase digital titles. Originally inspired by an image gallery architecture, this project has evolved into a robust E-commerce ecosystem with automated **email notifications**, advanced **filtering systems**, and a professional **back-office**.
 
-La aplicación permite a los usuarios **publicar eventos**, **operar con ellos** (por ejemplo, apuntarse a eventos) y **gestionar su información**, diferenciando claramente entre **front-office** y **back-office**, así como entre **usuarios normales y administradores**.
-
----
-
-## 🧩 Estructura del proyecto
-
-El proyecto está dividido en dos grandes partes:
-
-### 🔓 Front-office (zona pública)
-Accesible para cualquier usuario, incluso sin estar registrado.
-
-### 🔐 Back-office (zona privada)
-Accesible únicamente tras iniciar sesión, con diferentes permisos según el tipo de usuario.
+The platform provides a seamless experience for both buyers and administrators, ensuring security and data integrity at every step.
 
 ---
 
-## 👥 Tipos de usuarios
+## 🧩 Project Structure
 
-### 👤 Usuario anónimo
-- Acceso a la página principal
+The application is architecturally divided into two specialized environments:
+
+### 🔓 Front-office (Public Storefront)
+Accessible to everyone. It functions as the main marketplace where users can browse the catalog and view game details.
+
+### 🔐 Back-office (Private Dashboard)
+Accessible only to authenticated users, with specific features and permissions based on the user's role.
+
+---
+
+## 👥 User Roles
+
+### 👤 Guest User (Anonymous)
+- Access to the Home Page and game catalog.
+- User registration with **numeric CAPTCHA**.
+- Secure Login system.
+
+### 👤 Gamer (Standard User)
+- Access to the Back-office.
+- **My Collection:** View and manage purchased games or interactions.
+- **Game Management:** Create, edit, and delete **their own** game listings.
+- **Profile Management:** Update security credentials and personal avatar.
+- **Automated Notifications:** Receive email confirmations after purchases.
+
+### 🛡️ Administrator
+- All standard user capabilities.
+- **Global Management:** Full CRUD access to all games on the platform.
+- **User Administration:**
+  - Change user roles (Promote/Demote).
+  - Delete users (restricted if they have linked operational data).
+
+---
+
+## 🧭 Dynamic Navigation
+
+The menu adapts in real-time to the user's session state:
+
+### Before Login
+- Home
 - Login
-- Registro
-- Visualización de eventos publicados
+- Register
 
-### 👤 Usuario normal
-- Acceso al back-office
-- Crear, editar y eliminar **solo sus propios eventos**
-- Ver los eventos con los que ha operado
-- Acceder y modificar su perfil
-- Logout (mostrando su nombre)
+### Registered User
+- Home
+- My Games (Inventory)
+- My Purchases
+- My Profile
+- Logout (displays username)
 
-### 🛡️ Usuario administrador
-- Todas las funcionalidades del usuario normal
-- Gestión completa de eventos de todos los usuarios
-- Gestión de usuarios:
-  - Cambiar tipo de usuario
-  - Eliminar usuarios (si no tienen datos asociados)
+### Administrator
+- All User options
+- User Management Dashboard
 
 ---
 
-## 🧭 Menú dinámico
+## 🌐 Front-office Features
 
-El menú principal varía según el estado del usuario:
+### 🔑 Authentication
+- Email and password-based login.
+- Automatic redirection to the Back-office upon success.
+- Protection against re-accessing login/register pages while authenticated.
 
-### Antes de hacer login
-- Página principal
-- Login
-- Registro
+### 📝 Registration
+- Secure sign-up for new gamers.
+- Fields: Username, Email, Password (with verification), and **Numeric CAPTCHA**.
+- Automatic login after successful registration.
 
-### Usuario normal
-- Página principal
-- Mis eventos
-- Mis operaciones
-- Mi perfil
-- Logout
+### 🏠 Marketplace (Home)
+- Catalog of games sorted by release date.
+- **Game Cards:** - Visual cover (or default placeholder).
+  - Title, Date, and Developer (Creator).
+  - "View Details" CTA.
+- **Advanced Filters:**
+  - By Category/Genre.
+  - Date range filtering.
+  - Full-text search (Title and Description).
 
-### Usuario administrador
-- Todas las opciones del usuario normal
-- Gestión de usuarios
+### 📄 Product Details
+- High-resolution game cover.
+- Full description and technical details.
+- Developer profile link (View more games by this creator).
 
----
-
-## 🌐 Front-office
-
-### 🔑 Login
-- Formulario con email y contraseña
-- Redirección automática al área privada tras un login correcto
-- No se permite acceder al login si el usuario ya está logueado
-
-### 📝 Registro
-- Registro de usuarios normales
-- Campos:
-  - Nombre de usuario
-  - Email
-  - Contraseña (con verificación)
-  - CAPTCHA numérico
-- Login automático tras registro correcto
-
-### 🏠 Página principal
-- Listado de eventos ordenados por fecha
-- Información mostrada por evento:
-  - Imagen (o imagen por defecto)
-  - Título
-  - Fecha
-  - Usuario creador
-  - Opción “Ver más”
-- Filtros:
-  - Por categoría
-  - Entre dos fechas
-- Búsqueda por texto en título y descripción
-
-### 📄 Página de detalles
-- Imagen en grande
-- Título
-- Fecha
-- Descripción
-- Usuario creador (enlace a sus eventos)
-
-### 🔄 Operaciones sobre eventos
-- El usuario debe estar logueado
-- Ejemplo: apuntarse a un evento
-- Se guarda la relación usuario–evento
-- El creador del evento recibe un correo electrónico notificando la operación
+### 🛒 Transactions & Interaction
+- Secure purchase/interaction flow (requires login).
+- User-Game relational data persistence.
+- **Email System:** The developer receives an automated email notification when a user interacts with or buys their game.
 
 ---
 
-## 🧑‍💼 Back-office
+## 🧑‍💼 Back-office (Management)
 
-### 📋 Mis eventos
-- Tabla con los eventos creados por el usuario
-- Acciones:
-  - Ver
-  - Editar
-  - Eliminar (solo si no existen datos asociados)
+### 📋 My Inventory
+- Management table for the user's own games.
+- Actions: View, Edit, and Delete (only if no active transactions exist).
 
-### 📦 Mis operaciones
-- Lista de eventos con los que el usuario ha interactuado
+### 📦 My Operations
+- A historical log of games the user has purchased or interacted with.
 
-### ➕ Crear evento
-- Formulario con todos los datos necesarios
-- Subida de imagen incluida
+### ➕ Add New Game
+- Comprehensive form for game publishing.
+- Integrated image upload system.
 
-### 👤 Mi perfil
-- Visualización de datos del usuario
-- Operaciones independientes:
-  - Cambiar contraseña
-  - Cambiar avatar
-    - Tamaño máximo: 10KB
-    - Resolución: 100x100 px
-    - Formato: JPG o PNG
-- Avatar por defecto al registrarse
+### 👤 My Profile
+- Private data visualization.
+- **Independent Security Modules:**
+  - Password update.
+  - Avatar management:
+    - Max size: **10KB**.
+    - Resolution: **100x100 px**.
+    - Format: **JPG/PNG**.
 
-### 🛠️ Gestión de usuarios (Administrador)
-- Tabla con todos los usuarios
-- Funcionalidades:
-  - Cambiar tipo de usuario
-  - Eliminar usuarios (si no tienen datos asociados)
-- Filtro por tipo de usuario
+### 🛠️ User Management (Admin Only)
+- Global user database table.
+- Features: Role switching and secure account deletion.
+- Filters by user type.
 
 ---
 
-## 🔐 Control de acceso
+## 🔐 Security & Access Control
 
-- Todas las páginas privadas requieren login
-- Redirección automática al login si no hay sesión activa
-- Control de permisos según el rol del usuario
-
----
-
-## 🗄️ Base de datos
-
-- Base de datos en **MariaDB**
-- Acceso mediante **PDO**
-- Uso de consultas preparadas para evitar **SQL Injection**
-- Contraseñas encriptadas con **bcrypt**
-- Usuario administrador por defecto:
-  - Usuario: `admin`
-  - Contraseña: `admin`
-- Se incluye un script SQL con:
-  - Creación de la base de datos
-  - Creación del usuario de la BBDD
-  - Estructura de tablas
-  - Datos de ejemplo
+- **Session Guard:** All private routes are protected by Symfony security voters.
+- **Encryption:** All passwords hashed using **bcrypt**.
+- **Data Integrity:** Used **PDO** with **Prepared Statements** to prevent SQL Injection.
+- **Input Validation:** Full server-side validation for all forms.
 
 ---
 
-## ✅ Validaciones y seguridad
+## 🗄️ Database
 
-- Validación completa en el servidor
-- Campos obligatorios correctamente validados
-- CAPTCHA en el registro
-- Control de tamaño y formato de imágenes
-- El proyecto funciona correctamente sin validación en cliente
-
----
-
-## 🎨 Diseño
-
-- Uso de plantilla externa o diseño propio
-- Interfaz coherente con la temática
-- Diseño responsive
-- Uso moderado de imágenes para no exceder el tamaño de entrega
+- Managed with **MariaDB**.
+- Includes a full SQL script with:
+  - Database and User creation.
+  - Table structures and relationships.
+  - Seed data (Sample games and categories).
+- **Default Admin:**
+  - **User:** `admin`
+  - **Password:** `admin`
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## 🚀 Technologies Used
 
-- PHP
-- Symfony
-- MariaDB
-- PDO
-- HTML5 / CSS3
-- JavaScript
-- Tailwind / Bootstrap
-- Git / GitHub
+- **PHP / Symfony** (Backend Framework)
+- **Twig** (Templating Engine)
+- **MariaDB** (Database)
+- **Tailwind CSS / Bootstrap** (UI Design)
+- **SwiftMailer / Mailer** (Email Services)
+- **JavaScript** (Frontend Logic)
 
 ---
 
-## 📂 Entrega
+## 📂 Delivery Contents
 
-El repositorio incluye:
-- Código fuente completo
-- Script SQL de la base de datos
-- Usuario administrador por defecto
-- Este archivo README.md
+The repository contains:
+- Full Source Code.
+- Database SQL Script.
+- Admin credentials.
+- This README.md file.
